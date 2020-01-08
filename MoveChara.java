@@ -2,7 +2,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.animation.AnimationTimer;
-
+/**
+* キャラの移動に関するクラスです。
+*/
 public class MoveChara {
     public static final int TYPE_DOWN  = 0;
     public static final int TYPE_LEFT  = 1;
@@ -26,7 +28,9 @@ public class MoveChara {
     private int count   = 0;
     private int diffx   = 1;
     private int charaDir;
-
+    /**
+    * スタート位置とマップデータを読み込んでいるメソッドです。
+    */
     MoveChara(int startX, int startY, MapData mapData){
         this.mapData = mapData;
 
@@ -59,11 +63,17 @@ public class MoveChara {
             diffx = 1;
         }
     }
-
+    /**
+    *X座標を返すメソッドです。
+    * @return X座標
+    */
     public int getPosX(){
         return posX;
     }
-
+    /**
+    *Y座標を返すメソッドです。
+    * @return Y座標
+    */
     public int getPosY(){
         return posY;
     }
@@ -78,16 +88,26 @@ public class MoveChara {
             }
         }
     }
-
+    /**
+    *各画像ごとにキャラが動けるか否かの判断を返すメソッドです。
+    * @return true or false
+    */
     public boolean canMove(int dx, int dy){
         if (mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_WALL){
             return false;
         } else if (mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_NONE){
             return true;
+        }else if(mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_OTHERS){
+          return true;
+        }else if(mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_GOAL){
+          return true;
         }
         return false;
     }
-
+    /**
+    *キャラが動ける際に移動後のX,Y座標を計算するメソッドです。
+    * @return true or false
+    */
     public boolean move(int dx, int dy){
         if (canMove(dx,dy)){
             posX += dx;

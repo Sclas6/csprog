@@ -8,6 +8,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
+//BGM
+import java.io.File;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 public class MapGame extends Application {
     Stage stage;
     
@@ -19,8 +24,16 @@ public class MapGame extends Application {
 	Scene myScene = new Scene(myPane_top);
 	primaryStage.setScene(myScene);
 	primaryStage.show();
+
+    //BGM
+    primaryStage.show();
+    Media m = new Media(new File("loop1.wav").toURI().toString());
+    MediaPlayer mp = new MediaPlayer(m);
+    mp.play();
+
+
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }

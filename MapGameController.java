@@ -15,13 +15,13 @@ public class MapGameController implements Initializable {
     public MoveChara chara;
     public GridPane mapGrid;
     public ImageView[] mapImageViews;
-//    public Group[] mapGroups;
+    public Group[] mapGroups;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mapData = new MapData(21,15);
         chara = new MoveChara(1,1,mapData);
-//        mapGroups = new Group[mapData.getHeight()*mapData.getWidth()];
+        mapGroups = new Group[mapData.getHeight()*mapData.getWidth()];
         mapImageViews = new ImageView[mapData.getHeight()*mapData.getWidth()];
         for(int y=0; y<mapData.getHeight(); y++){
             for(int x=0; x<mapData.getWidth(); x++){
@@ -31,6 +31,17 @@ public class MapGameController implements Initializable {
         }
         mapPrint(chara, mapData);
     }
+
+    public void clear(int x , int y ,int type){
+        if (mapData.getMap(chara.getPosX() , chara.getPosY() ) != MapData.TYPE_GOAL){
+            mapData.setItems(x, y ,0);
+        }
+        int index = y * mapData.getWidth() +x ;
+        mapImageViews[index] = mapData.getImageView(x, y);
+        mapPrint(chara, mapData);
+    }
+
+
 
     public void mapPrint(MoveChara c, MapData m){
         int cx = c.getPosX();
@@ -71,41 +82,77 @@ public class MapGameController implements Initializable {
     }
 
     public void downButtonAction(){
-        outputAction("DOWN");
         chara.setCharaDir(MoveChara.TYPE_DOWN);
         chara.move(0, 1);
         mapPrint(chara, mapData);
+        System.out.println("x=" + chara.getPosX() + "y=" + chara.getPosY());
+        goal();
+        clear(chara.getPosX() , chara.getPosY() , 0);
+        mapData.take_Item(chara.getPosX(), chara.getPosY());
     }
     public void downButtonAction(ActionEvent event) {
         downButtonAction();
     }
 
     public void rightButtonAction(){
-        outputAction("RIGHT");
         chara.setCharaDir(MoveChara.TYPE_RIGHT);
         chara.move( 1, 0);
         mapPrint(chara, mapData);
+        System.out.println("x=" + chara.getPosX() + "y=" + chara.getPosY());
+        goal();
+        clear(chara.getPosX() , chara.getPosY() , 0);
+        mapData.take_Item(chara.getPosX(), chara.getPosY());
     }
     public void rightButtonAction(ActionEvent event) {
-       rightButtonAction();
-
+        rightButtonAction();
     }
-    public void leftButtonAction(){    /**左に進む*/
+    public void leftButtonAction(){
         chara.setCharaDir(MoveChara.TYPE_LEFT);
         chara.move( -1, 0);
         mapPrint(chara, mapData);
+        System.out.println("x=" + chara.getPosX() + "y=" + chara.getPosY());
+        clear(chara.getPosX() , chara.getPosY() , 0);
+        goal();
+        mapData.take_Item(chara.getPosX(), chara.getPosY());
     }
     public void leftButtonAction(ActionEvent event) {
         leftButtonAction();
     }
-
-    public void upButtonAction(){    /**上に進む*/
-        outputAction("UP");
+    public void upButtonAction(){
         chara.setCharaDir(MoveChara.TYPE_UP);
-        chara.move( 0, -1);
+        chara.move( 0 ,-1);
         mapPrint(chara, mapData);
+        System.out.println("x=" + chara.getPosX() + "y=" + chara.getPosY());
+        goal();
+        clear(chara.getPosX() , chara.getPosY() , 0);
+        mapData.take_Item(chara.getPosX(), chara.getPosY());
     }
-    public void upButtonAction(ActionEvent event) {
+    public void upButtonAction(ActionEvent event){
         upButtonAction();
     }
+
+
+
+
+    //ゴールしたときにメソッド生成（各acctionbottonActionでこのメソッドを呼び出してください。）
+    public void goal() {
+        if(chara.getPosX() == 19 && chara.getPosY() == 13 && mapData.getItemcount() == 3){
+                System.out.println("goal");
+                mapData = new MapData(21,15);
+                chara = new MoveChara(1,1,mapData);
+                mapGroups = new Group[mapData.getHeight()*mapData.getWidth()];
+                mapImageViews = new ImageView[mapData.getHeight()*mapData.getWidth()];
+                for(int y=0; y<mapData.getHeight(); y++){
+                    for(int x=0; x<mapData.getWidth(); x++){
+                        int index = y*mapData.getWidth() + x;
+                        mapImageViews[index] = mapData.getImageView(x,y);
+                    }
+                }
+                mapPrint(chara, mapData);
+
+        }
+    }
+
+
+
 }

@@ -4,11 +4,15 @@ import javafx.scene.image.ImageView;
 public class MapData {
     public static final int TYPE_NONE   = 0;
     public static final int TYPE_WALL   = 1;
-    public static final int TYPE_OTHERS = 2;
+    public static final int TYPE_ITEM   = 2;
+    public static final int TYPE_GOAL = 3;
+    public static final int TYPE_OTHER = 4;
     private static final String mapImageFiles[] = {
         "png/SPACE.png",
         "png/WALL.png",
-        "png/SPACE.png"  // not used
+        "png/item1.png",
+        "png/goal.png",
+        "png/SPACE.png"
     };
 
     private Image[] mapImages;
@@ -16,11 +20,11 @@ public class MapData {
     private int[][] maps;
     private int width;
     private int height;
-
+    private int itemcount = 0;
     MapData(int x, int y){
-        mapImages     = new Image[2];
+        mapImages     = new Image[5];
         mapImageViews = new ImageView[y][x];
-        for (int i=0; i<2; i++) {
+        for (int i=0; i<5; i++) {
             mapImages[i] = new Image(mapImageFiles[i]);
         }
 
@@ -30,7 +34,50 @@ public class MapData {
 
         fillMap(MapData.TYPE_WALL);
         digMap(1, 3);
+        ITEM();
+        setMap(19, 13 , 3);
         setImageViews();
+        printMap();
+    }
+
+    public void setItems(int x , int y, int type){
+        mapImageViews[y][x] = new ImageView(mapImages[type]);
+    }
+
+    public void take_Item(int x, int y ){
+        if (getMap(x, y) == MapData.TYPE_ITEM){
+
+            setMap(x, y, MapData.TYPE_OTHER);
+            itemcount++;
+            System.out.println("取得数： " + itemcount);
+
+            setImageViews();
+            printMap();
+
+            if(itemcount < 3){
+                int rest = 3 - itemcount;
+                System.out.println("あと" + rest + "個");
+            } else {
+                System.out.println("ゴール可能になった");
+            }
+        }
+    }
+
+    public int getItemcount(){
+        return itemcount;
+    }
+
+    public void ITEM(){
+        for(int i = 0; i < 3; i++){
+            int rx;
+            int ry;
+            do{
+                rx = (int)(Math.random()*(width/2))*2 +1;
+                ry = (int)(Math.random()*(height/2))*2 +1;
+            }
+            while(maps[ry][rx] !=TYPE_NONE);
+            maps[ry][rx] = TYPE_ITEM;
+        }
     }
 
     public int getHeight(){

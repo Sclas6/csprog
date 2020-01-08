@@ -14,8 +14,8 @@ public class MoveChara {
     private final String pngPathBefore = "png/neko";
     private final String pngPathAfter  = ".png";
 
-    private int posX;
-    private int posY;
+    private static int posX;
+    private static int posY;
 
     private MapData mapData;
 
@@ -47,6 +47,7 @@ public class MoveChara {
         posY = startY;
 
         setCharaDir(TYPE_DOWN);
+
     }
 
     public void changeCount(){
@@ -60,11 +61,11 @@ public class MoveChara {
         }
     }
 
-    public int getPosX(){
+    public static int getPosX(){
         return posX;
     }
 
-    public int getPosY(){
+    public static int getPosY(){
         return posY;
     }
 
@@ -84,9 +85,19 @@ public class MoveChara {
             return false;
         } else if (mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_NONE){
             return true;
+        }else if (mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_ITEM){
+            return true;
+        }else if (mapData.getMap(posX+dx, posY+dy) == 3){
+            return true;
+        }else if (mapData.getMap(posX+dx, posY+dy) == 4){
+            return true;
+        }else if (mapData.getMap(posX+dx, posY+dy) == 5){
+            return true;
         }
+
         return false;
     }
+
 
     public boolean move(int dx, int dy){
         if (canMove(dx,dy)){

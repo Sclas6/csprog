@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.input.* ?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox fx:controller="MapGameController" xmlns:fx="http://javafx.com/fxml"
-      onKeyPressed="#keyAction">
+<VBox onKeyPressed="#keyAction" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MapGameController">
   <padding>
-    <Insets top="10" right="10" bottom="10" left="10"/>
+    <Insets bottom="10" left="10" right="10" top="10" />
   </padding>
-
+  
   <children>
+    <GridPane fx:id="mapGrid" prefHeight="360" prefWidth="360">
+    </GridPane>
     <HBox prefHeight="50">
       <children>
-	<GridPane xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-	  <Button text="↑" GridPane.rowIndex="0" GridPane.columnIndex="1" onAction="#upButtonAction" />
-	  <Button text="←" GridPane.rowIndex="1" GridPane.columnIndex="0" onAction="#leftButtonAction"/>
-	  <Button text="→" GridPane.rowIndex="1" GridPane.columnIndex="2" onAction="#rightButtonAction" />
-	  <Button text="↓" GridPane.rowIndex="2" GridPane.columnIndex="1" onAction="#downButtonAction" />
+	<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml">
+	  <Button onAction="#upButtonAction" text="↑" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+	  <Button onAction="#leftButtonAction" text="←" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+	  <Button onAction="#rightButtonAction" text="→" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+	  <Button onAction="#downButtonAction" text="↓" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
 	</GridPane>
-	<Button text="func1" prefWidth="100" onAction="#func1ButtonAction"/>
-	<Button text="func2" prefWidth="100" onAction="#func2ButtonAction"/>
-	<Button text="func3" prefWidth="100" onAction="#func3ButtonAction"/>
-	<Button text="func4" prefWidth="100" onAction="#func4ButtonAction"/>
+	<Button onAction="#func1ButtonAction" prefWidth="100" text="func1" />
+	<Button onAction="#func2ButtonAction" prefWidth="100" text="func2" />
+	<Button onAction="#func3ButtonAction" prefWidth="100" text="func3" />
+	<Button onAction="#func4ButtonAction" prefWidth="100" text="func4" />
       </children>
     </HBox>
-    <GridPane fx:id="mapGrid" prefWidth="360" prefHeight="360" >
-    </GridPane>
 
   </children>
 </VBox>
